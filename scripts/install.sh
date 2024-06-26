@@ -23,13 +23,12 @@ fi
 
 export SSID INTERFACE UEFI
 
-cp ./scripts/chrootconfig.sh /mnt/home
+cp ./scripts/chrootconfig.sh /mnt/root
 
 # configuring system in chroot
 arch-chroot /mnt << EOC
-cd /home
+cd
 ./chrootconfig.sh
-
 EOC
 
 umount -R /mnt

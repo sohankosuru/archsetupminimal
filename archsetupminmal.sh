@@ -1,6 +1,6 @@
 #! /bin/bash
-exec > >(tee -a archsetupminimal.log)
-exec 2> >(tee -a archsetupminimal.log >&2)
+exec > >(tee -a /mnt/archsetupminimal.log)
+exec 2> >(tee -a /mnt/archsetupminimal.log >&2)
 
 ./scripts/preinstall.sh && \
 ./scripts/setup.sh && \
