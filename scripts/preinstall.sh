@@ -1,6 +1,11 @@
 #! /bin/bash
 echo "Running preinstall checks..."
 
+if [[ $EUID -ne 0 ]]; then
+    echo "Error: Permission Denied. This script must be run as root."
+    exit 1
+fi
+
 # checking for internet
 ping -c 3 "archlinux.org" > /dev/null 2>&1
 if ! [ $? -eq 0 ] ; then
