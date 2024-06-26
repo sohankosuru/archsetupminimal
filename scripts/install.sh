@@ -2,12 +2,12 @@
 
 # installing packages
 pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel \
-    grub netcli dhcpcd lightdm lightdm-gtk-greeter sudo \
+    grub netctl dhcpcd lightdm lightdm-gtk-greeter sudo \
     xfce4 xfce4-goodies nano vim neofetch man-db man-pages texinfo \
     less firefox
 
 if [ -d "/sys/firmware/efi" ]; then
-    pacstrap -K efibootmgr
+    pacstrap -K /mnt efibootmgr
 fi
 
 touch /mnt/etc/fstab
