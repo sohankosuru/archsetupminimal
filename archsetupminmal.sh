@@ -1,4 +1,4 @@
 #! /bin/bash
 
-./scripts/preinstall.sh
+./scripts/preinstall.sh && \
 ./scripts/setup.sh

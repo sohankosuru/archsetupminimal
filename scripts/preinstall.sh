@@ -27,6 +27,6 @@ if [[ -f /var/lib/pacman/db.lck ]]; then
     exit 1
 fi
 
-echo "Passed all preinstall tests, continuing to install"
+exit 0
 
 
