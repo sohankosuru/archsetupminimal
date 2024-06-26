@@ -4,7 +4,7 @@
 pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel \
     grub netcli dhcpcd lightdm lightdm-gtk-greeter sudo \
     xfce4 xfce4-goodies nano vim neofetch man-db man-pages texinfo \
-    less 
+    less firefox
 
 if [ -d "/sys/firmware/efi" ]; then
     pacstrap -K efibootmgr
@@ -14,6 +14,13 @@ touch /mnt/etc/fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 SSID=$(iwgetid --raw)
 INTERFACE=$(iwgetid | awk '{print $1}')
+
+if [ -d /sys/firmware/efi ]; then
+    UEFI=0  # UEFI is present
+else
+    UEFI=1  # UEFI is not present
+fi
+
 
 # configuring system in chroot
 arch-chroot /mnt << EOC
@@ -55,7 +62,21 @@ arch-chroot /mnt << EOC
     Key=${HASHED_PSK}
     EOL
 
-    
+    if [ $UEFI -eq 0 ]; then
+        grub-install --efi-directory=/dev/${DEVICE}1
+        grub-mkconfig -o /boot/grub/grub.cfg
+    else
+        grub-install --target=i386-pc /dev/${DEVICE}
+        grub-mkconfig -o /boot/grub/grub.cfg
+    fi
 
-    
+    netctl enable mywpaprofile
+    systemctl enable lightdm
+    echo "nameserver 1.1.1.2" >> /etc/resolv.conf
+
+    unset DEVICE
+
 EOC
+
+umount -R /mnt
+reboot

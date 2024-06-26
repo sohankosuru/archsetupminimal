@@ -83,5 +83,7 @@ device_selection
 partition_and_formatting
 mounting
 
+export DEVICE
+
 exit 0
 
