@@ -18,10 +18,6 @@ partition_and_formatting(){
 
     # 256MB for ESP, 1GB [SWAP], rest root
     if [ -d "/sys/firmware/efi" ]; then
-        #EFISIZE=$((256*1024*1024/512)) -- 256m
-        #SWAPSIZE=$((1*1024*1024*1024/512)) -- 1g
-        #TOTALSIZE=$(blockdev --getsz /dev/$DEVICE)
-        #ROOTSIZE=$((TOTALSIZE-EFISIZE-SWAPSIZE))
 
         sgdisk --clear \
         --new=1::+256M --typecode=1:ef00 --change-name=1:"EFI" \
@@ -31,10 +27,7 @@ partition_and_formatting(){
 
     else
         echo "UEFI not detected, skipping EFI system partition"
-        #SWAPSIZE=$((1*1024*1024*1024/512)) - 1GB
-        #TOTALSIZE=$(blockdev --getsz /dev/$DEVICE)
-        #ROOTSIZE=$((TOTALSIZE-SWAPSIZE))
-        
+
         sgdisk --clear \
         --new=1::+1G --typecode=1:8200 --change-name=1:"SWAP" \
         --new=2::-0 --typecode=2:8300 --change-name=2:"ROOT" \
@@ -89,8 +82,6 @@ mounting(){
 device_selection
 partition_and_formatting
 mounting
-
-genfstab -U /mnt >> /mnt/etc/fstab
 
 exit 0
 
