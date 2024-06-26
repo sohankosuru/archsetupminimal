@@ -15,7 +15,7 @@ fi
 
 # checking disk size
 DISKSIZE=$(lsblk -b | awk '$0 ~ /^NAME/ { next } $0 ~ /^([a-z]+|nvme)/ { size=$4 } END { print size }')
-MINREQ=$((8*1024*1024*1024))
+MINREQ=$((8000000000))
 if [ "$DISKSIZE" -lt  "$MINREQ" ]; then
     echo "Error: Install requires minimum 8GB of disk space. Current disk size is $DISKSIZE bytes."
     exit 1
