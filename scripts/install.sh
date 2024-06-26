@@ -34,6 +34,7 @@ arch-chroot /mnt << EOC
     read -p "Enter a username for a new user: " $USERNAME
     useradd -m -G wheel -s /bin/bash $USERNAME
     passwd --stdin $USERNAME << read -p "Enter a password for ${USERNAME}: "
+    echo "%wheel ALL=(ALL:ALL) ALL" | EDITOR='tee -a' visudo
 
-
+    
 EOC
