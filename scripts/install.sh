@@ -21,6 +21,8 @@ else
     UEFI=1  # UEFI is not present
 fi
 
+export SSID INTERFACE UEFI
+
 cp ./scripts/chrootconfig.sh /mnt/home
 
 # configuring system in chroot

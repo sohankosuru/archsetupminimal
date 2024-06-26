@@ -52,4 +52,4 @@ systemctl enable lightdm
 echo "nameserver 1.1.1.2" >> /etc/resolv.conf
 systemctl enable dhcpd
 
-unset DEVICE
+unset DEVICE INTERFACE UEFI SSID
