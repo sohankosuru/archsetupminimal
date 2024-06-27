@@ -32,4 +32,3 @@ cd
 EOC
 
 umount -R /mnt
-reboot
