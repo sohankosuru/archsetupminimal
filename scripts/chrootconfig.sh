@@ -12,16 +12,16 @@ echo "KEYMAP=us" >> /etc/vconsole.conf
 
 # ask for hostname
 touch /etc/hostname
-read -p "Enter a hostname: " HOSTNAME
-echo ${HOSTNAME} >> /etc/hostname
+read -p "Enter a hostname: " HOSTNAME <&3
+echo "\$HOSTNAME" >> /etc/hostname
 
 # users and sudo
-read -p "Enter a ROOT USER password: " ROOTPWD
-echo $ROOTPWD | passwd --stdin 
-read -p "Enter a username for a new user: " USERNAME
-useradd -m -G wheel -s /bin/bash "${USERNAME}"
-read -p "Enter a password for ${USERNAME}: " USERPWD
-echo $USERPWD | passwd $USERNAME --stdin
+read -p "Enter a ROOT USER password: " ROOTPWD <&3
+echo \$ROOTPWD | passwd --stdin 
+read -p "Enter a username for a new user: " USERNAME <&3
+useradd -m -G wheel -s /bin/bash "\$USERNAME"
+read -p "Enter a password for \$USERNAME : " USERPWD <&3
+echo \$USERPWD | passwd \$USERNAME --stdin
 echo '%wheel ALL=(ALL:ALL) ALL' | sudo EDITOR='tee -a' visudo
 
 # netctl config, assumes wpa wireless

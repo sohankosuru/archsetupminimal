@@ -26,7 +26,7 @@ export SSID INTERFACE UEFI
 cp ./scripts/chrootconfig.sh /mnt/root
 
 # configuring system in chroot
-arch-chroot /mnt << EOC
+arch-chroot /mnt 3<&0 <<EOC
 cd
 ./chrootconfig.sh
 EOC
